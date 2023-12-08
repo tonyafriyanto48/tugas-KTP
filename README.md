@@ -1,16 +1,4 @@
-# restapiktp
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* untuk code Php ada di dalam folder "Php_data"
+* file PHP sudah di perbaiki dan diberikomentar jika bingung
+* file database sudah berada di dalam folder "php_data" jadi di import dahulu kedalam localhost
+* ip nya jangan lupa di ubah ya buat debugging nya karna itu pakai ip sini ada keterangan nya di komentar
