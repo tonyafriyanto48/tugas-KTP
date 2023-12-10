@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_kelompok/data.dart';
-import 'package:project_kelompok/form.dart';
+// import 'package:restapiktp/data.dart';
+// import 'package:restapiktp/form.dart';
+import 'package:restapiktp/screen/create.dart';
+import 'package:restapiktp/screen/index.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,19 +22,17 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const FormPage()));
+                      MaterialPageRoute(builder: (context) => CreatePage()));
                 },
-                child: const Text("Mengisi Biodata")
-            ),
+                child: const Text("Mengisi Biodata")),
             ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const DataPage()));
+                      MaterialPageRoute(builder: (context) => KtpListScreen()));
                 },
-                child: const Text("Menampilkan Data")
-            ),
+                child: const Text("Menampilkan Data")),
           ],
         ),
       ),

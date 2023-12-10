@@ -8,27 +8,23 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
-  // Inisialisasi controller untuk setiap input field
   late TextEditingController namaController;
   late TextEditingController tanggalLahirController;
   late TextEditingController provinsiController;
   late TextEditingController tempatTinggalController;
+  final _formKey = GlobalKey<FormState>(); // Add this line
 
   @override
   void initState() {
     super.initState();
-
-    // Inisialisasi controller saat widget diinisialisasi
     namaController = TextEditingController();
     tanggalLahirController = TextEditingController();
     provinsiController = TextEditingController();
     tempatTinggalController = TextEditingController();
   }
 
-  // Fungsi untuk membuat data baru
   Future<void> createData() async {
-    final url =
-        "http://192.168.11.15/php_data/create.php"; // Ganti dengan URL PHP script Anda
+    final url = "http://192.168.11.15/php_data/create.php";
 
     final response = await http.post(
       Uri.parse(url),
@@ -43,12 +39,9 @@ class _CreatePageState extends State<CreatePage> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       print(data['message']);
-
-      // Opsional: Navigasi kembali ke halaman sebelumnya (index page)
       Navigator.pop(context);
     } else {
-      print("Gagal membuat data. Error: ${response.reasonPhrase}");
-      // Handle error, tampilkan snackbar, atau pesan error
+      print("Failed to create data. Error: ${response.reasonPhrase}");
     }
   }
 
@@ -60,40 +53,86 @@ class _CreatePageState extends State<CreatePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Input field untuk nama
-            TextField(
-              controller: namaController,
-              decoration: InputDecoration(labelText: 'Nama'),
-            ),
-
-            // Input field untuk tanggal lahir
-            TextField(
-              controller: tanggalLahirController,
-              decoration: InputDecoration(labelText: 'Tanggal Lahir'),
-            ),
-
-            // Input field untuk provinsi
-            TextField(
-              controller: provinsiController,
-              decoration: InputDecoration(labelText: 'Provinsi'),
-            ),
-
-            // Input field untuk tempat tinggal
-            TextField(
-              controller: tempatTinggalController,
-              decoration: InputDecoration(labelText: 'Tempat Tinggal'),
-            ),
-
-            SizedBox(height: 16),
-
-            // Tombol untuk membuat data baru
-            ElevatedButton(
-              onPressed: createData,
-              child: Text('Create Data'),
-            ),
-          ],
+        child: Form(
+          // Wrap your form with a Form widget
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                // Use TextFormField instead of TextField
+                controller: namaController,
+                decoration: InputDecoration(
+                  labelText: 'Nama',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 15),
+              TextFormField(
+                controller: tanggalLahirController,
+                decoration: InputDecoration(
+                  labelText: 'tanggal Lahir',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 15),
+              TextFormField(
+                controller: provinsiController,
+                decoration: InputDecoration(
+                  labelText: 'provinsi',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 15),
+              TextFormField(
+                controller: tempatTinggalController,
+                decoration: InputDecoration(
+                  labelText: 'tempat tinggal',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Tidak boleh kosong';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    createData();
+                  }
+                },
+                child: Text('Create Data'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -101,7 +140,6 @@ class _CreatePageState extends State<CreatePage> {
 
   @override
   void dispose() {
-    // Membersihkan controller ketika widget di dispose
     namaController.dispose();
     tanggalLahirController.dispose();
     provinsiController.dispose();
